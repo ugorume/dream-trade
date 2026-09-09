@@ -1,0 +1,3 @@
+// Paste the values from Supabase Project Settings > API here.
+window.DREAM_TRADE_SUPABASE_URL = 'https://nqrvkykmcvmdtqbhutar.supabase.co';
+window.DREAM_TRADE_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xcnZreWttY3ZtZHRxYmh1dGFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5NDc0NTQsImV4cCI6MjEwNDUyMzQ1NH0.ZWqyfszsVpeDPHPgd53mcrC54MndVntyhupdW6tUYEI';

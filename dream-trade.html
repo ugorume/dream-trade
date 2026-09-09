@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dream Trade | Digital asset markets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <style>
+    @media (max-width: 620px) { .chart-panel .chart-actions { display: flex !important; gap: 4px; overflow: auto; } .chart-panel .chart-actions .ghost-button, .chart-panel .chart-actions .more-button { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="space-scene" id="spaceScene" aria-hidden="true">
+      <div class="star-field"></div>
+      <div class="rocket" id="rocket">
+        <span class="rocket-fin left"></span><span class="rocket-fin right"></span>
+        <span class="rocket-body"><span class="rocket-window"></span><span class="rocket-wordmark">DREAM<br>TRADE</span></span>
+        <span class="rocket-flame"><i></i><i></i><i></i></span>
+      </div>
+    </div>
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>DREAM <b>TRADE</b></span>
+      </a>
+      <div class="topbar-center"><span class="live-dot"></span> Markets are live <span class="topbar-separator"></span><span class="muted-text">Tuesday, September 09, 2026</span></div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode"><span>☼</span><i></i><span>☾</span></button>
+        <button class="icon-button" aria-label="Notifications"><span class="notification-icon"></span><i></i></button>
+        <button class="profile-button" data-open-auth><span class="avatar">JD</span><span class="profile-copy"><strong>Guest trader</strong><small>Connect account</small></span><span class="chevron">⌄</span></button>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="welcome-row reveal">
+        <div><p class="eyebrow">TUESDAY / 09 SEP 2026</p><h1>Good morning, <em>trader.</em></h1><p class="subheading">The market is moving. Stay curious.</p></div>
+        <div class="account-prompt"><span class="pulse-ring"></span><span>Demo mode is on</span><button data-open-auth>Connect account <span>↗</span></button></div>
+      </section>
+
+      <section class="ticker-strip reveal delay-1" aria-label="Market overview">
+        <div class="ticker-intro"><span class="sparkle">✦</span><span>MARKET PULSE</span></div>
+        <div class="ticker-items" id="tickerItems"></div>
+      </section>
+
+      <section class="workspace-grid reveal delay-2">
+        <div class="chart-panel panel">
+          <div class="panel-head">
+            <div class="pair-heading"><div class="coin-icon bitcoin" id="selectedCoinIcon">B</div><div><div class="pair-name"><strong id="selectedPair">BTC / USD</strong><span class="badge" id="selectedBadge">BTC</span></div><div class="price-line"><strong id="selectedPrice">67,842.90</strong><span class="positive" id="selectedChange">+2.84%</span></div></div></div>
+            <div class="chart-actions"><div class="chart-type-switch" role="group" aria-label="Chart type"><button class="chart-type active" data-chart-type="candles">Candles</button><button class="chart-type" data-chart-type="line">Line</button><button class="chart-type" data-chart-type="bars">Bars</button></div><button class="ghost-button">Indicators <span>⌄</span></button><button class="more-button">•••</button></div>
+          </div>
+          <div class="chart-meta"><span id="chartPairMeta">BTC/USD · SPOT</span><span class="chart-status"><i></i> <span id="priceSource">Live data</span></span></div>
+          <div class="chart-wrap"><div class="y-axis"><span>70k</span><span>68k</span><span>66k</span><span>64k</span><span>62k</span></div><svg id="priceChart" viewBox="0 0 900 340" preserveAspectRatio="none" role="img" aria-label="Bitcoin price chart"></svg><div class="x-axis"><span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>Now</span></div></div>
+          <div class="chart-footer"><div class="timeframes"><button>1H</button><button class="selected">1D</button><button>1W</button><button>1M</button><button>1Y</button></div><div class="chart-legend"><span><i class="legend-line"></i> Price</span><span><i class="legend-bar"></i> Volume</span></div></div>
+        </div>
+        <aside class="order-panel panel">
+          <div class="panel-head compact"><div><p class="eyebrow">QUICK TRADE</p><h2>Place an order</h2></div><span class="lock-badge">⌁ Demo</span></div>
+          <div class="order-tabs"><button class="order-tab buy active">Buy</button><button class="order-tab sell">Sell</button></div>
+          <div class="form-field"><label>Asset</label><button class="asset-select"><span class="coin-icon bitcoin small" id="orderCoinIcon">B</span><span><strong id="orderAsset">Bitcoin</strong><small id="orderPair">BTC / USD</small></span><span class="chevron">⌄</span></button></div>
+          <div class="form-field"><label>Amount <span>USD</span></label><div class="input-wrap"><span>$</span><input id="amountInput" type="number" value="1000" min="10" step="10" /><span class="input-suffix">USD</span></div></div>
+          <div class="order-summary"><div><span>Estimated BTC</span><strong id="estimatedCoin">0.01473 BTC</strong></div><div><span>Network fee</span><strong>$2.50</strong></div><div class="summary-total"><span>Total</span><strong id="orderTotal">$1,000.00</strong></div></div>
+          <button class="primary-button" id="orderButton">Review buy order <span>↗</span></button><p class="secure-note"><span>✓</span> Your demo balance is protected</p>
+        </aside>
+      </section>
+
+      <section class="lower-grid reveal delay-3">
+        <div class="markets-panel panel"><div class="panel-head"><div><p class="eyebrow">MARKETS</p><h2>Trending assets</h2></div><div class="market-actions"><div class="search-box"><span>⌕</span><input id="marketSearch" placeholder="Search assets" /></div><button class="filter-button">All assets <span>⌄</span></button></div></div><div class="market-table"><div class="table-row table-label"><span>Asset</span><span>Last price</span><span>24h change</span><span>Market cap</span><span></span></div><div id="marketRows"></div></div><button class="view-all">View all markets <span>↗</span></button></div>
+        <div class="watch-panel panel"><div class="panel-head"><div><p class="eyebrow">YOUR FAVOURITES</p><h2>Favourite pairs</h2></div><button class="add-button" id="addFavourite">+ Add</button></div><div class="watch-items" id="watchItems"></div><div class="empty-favourites" id="emptyFavourites">Star a pair to save it here.</div><div class="watch-footer"><span><i></i> Updates every 30 sec</span><button id="manageFavourites">Manage favourites ↗</button></div></div>
+      </section>
+      <section class="funding-panel panel reveal delay-3" id="funding">
+        <div class="panel-head"><div><p class="eyebrow">ACCOUNT FUNDING</p><h2>Deposit crypto</h2><p class="panel-description">Use a verified network and address for your sandbox wallet.</p></div><span class="lock-badge">⌁ Sandbox</span></div>
+        <div class="funding-grid">
+          <div class="funding-form"><label class="funding-label">Asset and network</label><div class="network-tabs"><button class="network-tab active" data-network="BTC">Bitcoin <small>BTC</small></button><button class="network-tab" data-network="ETH">Ethereum <small>ERC-20</small></button><button class="network-tab" data-network="USDC">USDC <small>ERC-20</small></button></div><p class="funding-warning"><span>!</span> Only send <strong id="networkName">BTC</strong> on the selected network. Sending another asset may permanently lose funds.</p><button class="primary-button generate-address" id="generateAddress">Generate deposit address <span>↗</span></button></div>
+          <div class="address-card" id="addressCard"><div class="address-empty"><span class="qr-placeholder">⌗</span><strong>No address generated</strong><small>Generate a sandbox address to continue.</small></div></div>
+        </div>
+        <div class="balance-strip"><span>Sandbox available balance</span><strong id="demoBalance">$0.00</strong><button id="simulateDeposit" disabled>Simulate deposit</button><span class="funding-note">Demo only · no real funds are received</span></div>
+      </section>
+    </main>
+    <footer><span>© 2026 Dream Trade Financial, Inc.</span><span>Prices are indicative · <a href="#">Risk disclosure</a> · <a href="#">Legal</a></span><span class="footer-status"><i></i> Systems operational</span></footer>
+  </div>
+
+  <div class="auth-overlay" id="authOverlay" aria-hidden="true"><div class="auth-card"><button class="close-auth" data-close-auth>×</button><div class="auth-brand"><span class="brand-mark"><span></span><span></span><span></span></span><span>DREAM <b>TRADE</b></span></div><div class="auth-copy"><p class="eyebrow">WELCOME BACK</p><h2>Make your next move.</h2><p>Trade the market with a little more clarity.</p></div><div class="auth-tabs"><button class="auth-tab active" data-auth-tab="login">Log in</button><button class="auth-tab" data-auth-tab="signup">Create account</button></div><button id="googleSignIn" class="google-button" type="button"><span class="google-g">G</span> Continue with Google</button><div class="or-divider"><span>or continue with email</span></div><form id="authForm"><label>Email address<input name="email" type="email" placeholder="you@example.com" required /></label><label>Password<div class="password-input"><input name="password" type="password" placeholder="Enter your password" required /><button type="button" class="show-password">Show</button></div></label><div class="auth-options"><label class="checkbox-label"><input type="checkbox" /> <span>Remember me</span></label><a href="#">Forgot password?</a></div><button class="primary-button auth-submit" type="submit"><span id="authSubmitText">Log in to Dream Trade</span><span>↗</span></button></form><p class="auth-legal">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p></div></div>
+  <div class="toast" id="toast"><span>✓</span><div><strong>Demo order ready</strong><small>Your order review is waiting for account connection.</small></div></div>
+  <script src="dream-trade.js"></script>
+</body>
+</html>
