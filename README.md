@@ -4,7 +4,7 @@ A static, interactive crypto broker dashboard concept built with plain HTML, CSS
 
 ## Run
 
-Open `dream-trade.html` directly in a browser. No build step or package installation is required.
+Open `index.html` directly in a browser. Vercel also uses `index.html` as the root static entry point. No build step or package installation is required.
 
 ## Included
 
